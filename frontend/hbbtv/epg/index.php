@@ -1,7 +1,4 @@
-<?php
-	header( "Content-Type: application/vnd.hbbtv.xhtml+xml;charset=utf-8" );
-	echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
-?>
+<?xml version="1.0" encoding="utf-8" ?>
 <!DOCTYPE html PUBLIC "-//HbbTV//1.1.1//EN" "http://www.hbbtv.org/dtd/HbbTV-1.1.1.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head> 
@@ -245,6 +242,7 @@
 		<div style="visibility:hidden;width:0px;height:0px;">
 			<object id="appmgr" type="application/oipfApplicationManager" style="position: absolute; left: 0px; top: 0px; width: 0px; height: 0px;"></object>
 			<object id="oipfcfg" type="application/oipfConfiguration" style="position: absolute; left: 0px; top: 0px; width: 0px; height: 0px;"></object>
+            <object id="oipfcap" type="application/oipfCapabilities" style="position: absolute; left: 0px; top: 0px; width: 0px; height: 0px"></object>
             <object id="broadcast" type="video/broadcast" style="position: absolute; left: 0px; top: 0px; width: 0px; height: 0px;"></object>
 		</div>
     	<div class="app_header">

@@ -210,14 +210,18 @@ Channel.prototype.getServiceRef = function() {
 
 //Returns the service instance with the highest priority
 Channel.prototype.getServiceInstance = function() {
+    var conformancePoints = this.conformancePoints || [];
     var instance = null;
     for(var i=0;i<this.serviceInstances.length;i++) {
         if(instance == null) {
-            if( isServiceInstanceAvailable(this.serviceInstances[i])) {
+            if(isServiceInstanceAvailable(this.serviceInstances[i])
+                && isServiceInstanceConform(this.serviceInstances[i], conformancePoints)) {
               instance = this.serviceInstances[i];
             }
         }
-        else if(instance.priority > this.serviceInstances[i].priority && isServiceInstanceAvailable(this.serviceInstances[i])) {
+        else if(instance.priority > this.serviceInstances[i].priority
+            && isServiceInstanceAvailable(this.serviceInstances[i])
+            && isServiceInstanceConform(this.serviceInstances[i], conformancePoints)) {
             instance = this.serviceInstances[i];
         }
     }

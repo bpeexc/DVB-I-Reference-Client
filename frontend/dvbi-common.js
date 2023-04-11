@@ -228,8 +228,25 @@ function parseServiceList(data,dvbChannels,supportedDrmSystems) {
             }
             instance.priority = priority;
             instance.contentProtection = [];
+            instance.conformancePoints = [];
             instance.parallelApps = [];
             instance.mediaPresentationApps = [];
+
+            var contentAttributes = serviceInstances[j].getElementsByTagName("ContentAttributes");
+            if (contentAttributes.length > 0) {
+                var conformancePoints = contentAttributes[0].children;
+                for (k = 0; k < conformancePoints.length; k++) {
+                    var conformancePoint = conformancePoints[k];
+                    if (["AudioConformancePoint", "VideoConformancePoint"].includes(conformancePoint.nodeName)) {
+                        var href = conformancePoint.getAttribute("href");
+                        if (!!href) {
+                            instance.conformancePoints.push(href)
+                        }
+                    }
+
+                }
+            }
+
             var contentProtectionElements =  getChildElements(serviceInstances[j],"ContentProtection");
             for(k = 0;k < contentProtectionElements.length;k++) {
               for(l = 0;l < contentProtectionElements[k].childNodes.length;l++) {
@@ -682,6 +699,16 @@ getParentalRating = function(href){
         return "Unknown";
     }
 };
+
+function isServiceInstanceConform(serviceInstance, conformancePoints) {
+    for (var i = 0; i < serviceInstance.conformancePoints.length; i++) {
+        var currentConformancePoint = serviceInstance.conformancePoints[i];
+        if (!conformancePoints.includes(currentConformancePoint)) {
+            return false;
+        }
+    }
+    return true;
+}
 
 function isServiceInstanceAvailable(instance) {
   if(instance.availability) {
