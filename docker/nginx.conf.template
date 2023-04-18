@@ -1,0 +1,34 @@
+ server {
+     listen ${NGINX_PORT};
+     server_name ${NGINX_HOST};
+
+     root /var/www/html;
+     index index.php;
+     add_header Cache-Control "no-cache, must-revalidate";
+
+
+     types {
+         application/dash+xml                    mpd;
+         text/html                               html;
+         text/css                                css;
+         text/xml                                xml;
+         image/gif                               gif;
+         image/jpeg                              jpeg jpg;
+         application/javascript                  js;
+         application/atom+xml                    atom;
+         application/rss+xml                     rss;
+         text/plain                              txt;
+         image/png                               png;
+         image/svg+xml                           svg svgz;
+         font/woff                               woff;
+         font/woff2                              woff2;
+     }
+
+     location = /dvbi/frontend/hbbtv/launcher/index.php {
+         types { } default_type "application/vnd.hbbtv.xhtml+xml";
+     }
+
+     location = /dvbi/frontend/hbbtv/epg/index.php {
+         types { } default_type "application/vnd.hbbtv.xhtml+xml";
+     }
+ }

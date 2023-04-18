@@ -1026,7 +1026,7 @@ function doServiceSelection() {
       if(serviceInstance.mediaPresentationApps) {
           for(i = 0;i< serviceInstance.mediaPresentationApps.length;i++ ) {
             if(serviceInstance.mediaPresentationApps[i].contentType == "application/vnd.dvb.ait+xml") {
-              serviceApp = _application_.createApplication(serviceInstance.mediaPresentationApps[i].url,true);
+              serviceApp = _application_.createApplication(serviceInstance.mediaPresentationApps[i].url,false);
               return;
             }
           }
@@ -1034,7 +1034,7 @@ function doServiceSelection() {
       if(selectedService.mediaPresentationApps) {
           for(i = 0;i< selectedService.mediaPresentationApps.length;i++ ) {
             if(selectedService.mediaPresentationApps[i].contentType == "application/vnd.dvb.ait+xml") {
-              serviceApp = _application_.createApplication(selectedService.mediaPresentationApps[i].url,true);
+              serviceApp = _application_.createApplication(selectedService.mediaPresentationApps[i].url,false);
               return;
             }
           }

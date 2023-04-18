@@ -1,14 +1,4 @@
-<?php
-    header( "Expires: Mon, 20 Dec 1998 01:00:00 GMT" );
-    header( "Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT" );
-    header( "Cache-Control: no-cache, must-revalidate" );
-    header( "Pragma: no-cache" );
-    date_default_timezone_set("Europe/Helsinki");
-
-	header( "Content-Type: application/vnd.hbbtv.xhtml+xml;charset=utf-8" );
-	echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n";
-	
-?>
+<?xml version="1.0" encoding="utf-8" ?>
 <!DOCTYPE html PUBLIC "-//HbbTV//1.1.1//EN" "http://www.hbbtv.org/dtd/HbbTV-1.1.1.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -19,6 +9,8 @@
 	<link rel="stylesheet" href="../CommonUI/dialog.css"/>
     <link rel="stylesheet" href="chinfo.css"/>
     <script src="../../../jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="../logger.js"></script>
+    <script type="text/javascript" src="capabilities.js"></script>
     <script type="text/javascript" src="menu.js"></script>
    	<script type="text/javascript" src="channel.js"></script>
     <script type="text/javascript" src="program.js"></script>
@@ -85,7 +77,9 @@
   var showStreamInfo = false;
   var streamInfoUpdater = null;
   var languages = null;
-    
+
+  //ConformancePoints
+  var conformancePoints = [];
 
 	var lang = "eng";
 	if(localizationLangFile != "eng.json"){
@@ -265,6 +259,8 @@
         var current_channel_obj = null;
         var listedChannels = [];
 
+        conformancePoints = capabilities.getConformancePoints("oipfcap");
+
         $("#menu_0").empty();
         _menu_ = new Menu("menu_0");
         _menu_.center = 0;
@@ -289,6 +285,7 @@
             ];
             chan.eval = "miniepg("+ i +");";
             var channel_obj = new Channel(chan, "menuitem"+ i);
+            channel_obj.conformancePoints = conformancePoints;
             for(var b = 0; b < channel_obj.boxes.length; b++){
 				channel_obj.boxes[b].description = "";
 				break;
@@ -527,7 +524,7 @@
 	<div style="visibility:hidden;width:0px;height:0px;">
 		<object id="appmgr" type="application/oipfApplicationManager" style="position: absolute; left: 0px; top: 0px; width: 0px; height: 0px;"></object>
 		<object id="oipfcfg" type="application/oipfConfiguration" style="position: absolute; left: 0px; top: 0px; width: 0px; height: 0px;"></object>
-       
+        <object id="oipfcap" type="application/oipfCapabilities" style="position: absolute; left: 0px; top: 0px; width: 0px; height: 0px"></object>
 	</div>
 
     <!-- <div id="debug" style="position:absolute; left:100px; top:100px; display:block;"></div> -->
