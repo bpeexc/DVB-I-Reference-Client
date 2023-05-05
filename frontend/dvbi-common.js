@@ -237,7 +237,7 @@ function parseServiceList(data,dvbChannels,supportedDrmSystems) {
                 var conformancePoints = contentAttributes[0].children;
                 for (k = 0; k < conformancePoints.length; k++) {
                     var conformancePoint = conformancePoints[k];
-                    if (["AudioConformancePoint", "VideoConformancePoint"].includes(conformancePoint.nodeName)) {
+                    if (["AudioConformancePoint", "VideoConformancePoint"].indexOf(conformancePoint.nodeName) >= 0) {
                         var href = conformancePoint.getAttribute("href");
                         if (!!href) {
                             instance.conformancePoints.push(href)
@@ -703,7 +703,7 @@ getParentalRating = function(href){
 function isServiceInstanceConform(serviceInstance, conformancePoints) {
     for (var i = 0; i < serviceInstance.conformancePoints.length; i++) {
         var currentConformancePoint = serviceInstance.conformancePoints[i];
-        if (!conformancePoints.includes(currentConformancePoint)) {
+        if (conformancePoints.indexOf(currentConformancePoint) < 0) {
             return false;
         }
     }

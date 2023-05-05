@@ -25,23 +25,22 @@ function capabilitiesModule() {
         "urn:dvb:metadata:cs:VideoConformancePointsCS:2017:1.1.4"
     ];
 
-    function cloneConformancePoints() {
+    var cloneConformancePoints = function() {
         var result = [];
         for (var i = 0; i < defaultConformancePoints.length; i++) {
             result[i] = defaultConformancePoints[i];
         }
         return result;
-    }
-    function getConformancePoints(capabilitiesId) {
+    };
 
-        var oipfCapabilities = $("#" + capabilitiesId)
+    var getConformancePoints = function(capabilitiesId) {
 
-        var conformancePoints = cloneConformancePoints()
-
-        let oipfCapabilitiesElem = oipfCapabilities[0];
+        var oipfCapabilities = $("#" + capabilitiesId);
+        var conformancePoints = cloneConformancePoints();
+        var oipfCapabilitiesElem = oipfCapabilities[0];
         if (!oipfCapabilitiesElem || !oipfCapabilitiesElem.xmlCapabilities) {
-            console.log("No capabilities found.")
-            return conformancePoints
+            console.log("No capabilities found.");
+            return conformancePoints;
         }
 
         try {
@@ -49,21 +48,21 @@ function capabilitiesModule() {
                 if (!b) {
                     return;
                 }
-                var conformancePoint = conformancePointsMapping[b.textContent]
-                if (!!conformancePoint && !conformancePoints.includes(conformancePoint)) {
-                    conformancePoints.push(conformancePoint)
+                var conformancePoint = conformancePointsMapping[b.textContent];
+                if (!!conformancePoint && conformancePoints.indexOf(conformancePoint) < 0) {
+                    conformancePoints.push(conformancePoint);
                 }
-            })
+            });
         } catch (e) {
-            console.log(e.message)
+            console.log(e.message);
         }
-        console.log(JSON.stringify(conformancePoints))
+        console.log(JSON.stringify(conformancePoints));
         return conformancePoints;
-    }
+    };
 
     return {
         getConformancePoints: getConformancePoints
-    }
+    };
 }
 
-var capabilities = capabilitiesModule()
+var capabilities = capabilitiesModule();
