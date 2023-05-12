@@ -43,8 +43,19 @@ function capabilitiesModule() {
             return conformancePoints;
         }
 
+        var capabilities = oipfCapabilitiesElem.xmlCapabilities;
+        $.ajax("/backend/capabilities", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/xml'
+            },
+            data: xmlSerializer.serializeToString(capabilities),
+            success: () => console.info("Capabilities sent"),
+            error: (_, status, err) => console.warn(`Capabilities cannot be sent (status=${status}, err=${err})`)
+        })
+
         try {
-            $(oipfCapabilitiesElem.xmlCapabilities).find("broadcast").each(function(_i, b) {
+            $(capabilities).find("broadcast").each(function(_i, b) {
                 if (!b) {
                     return;
                 }
