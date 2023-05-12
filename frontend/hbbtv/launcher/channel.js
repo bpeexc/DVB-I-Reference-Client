@@ -234,7 +234,7 @@ Channel.prototype.init = function( init_obj, element_id){
             if(self.image && self.image.length > 0 ) {
                 innerHtml = "<span class=\"menuitem_chicon\"><img src=\""+self.image.replace(/&/g,"&amp;")+"\"></img></span>";
             }
-            menuitem_title.innerHTML = innerHtml+"<span class=\"menuitem_chnumber\">" + XMLEscape(self.lcn) +".</span><span class=\"menuitem_chname\">" + XMLEscape(getLocalizedText(self.titles,languages.ui_language)) +"</span><span class=\"sourcetype\">" + XMLEscape(self.sourceTypes) +"</span>";
+            menuitem_title.innerHTML = innerHtml+"<span class=\"menuitem_chname\">" + XMLEscape(getLocalizedText(self.titles,languages.ui_language)) + "</span>";
             if(self.provider) {
                menuitem_title.innerHTML = menuitem_title.innerHTML+"<div class=\"provider\">" + XMLEscape(self.provider) +"</div>";
             }

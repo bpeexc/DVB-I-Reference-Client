@@ -163,7 +163,7 @@
           languages.ui_language = "eng";
         }
         i18n.loadLanguage(languages.ui_language);
-        var serviceList = getLocalStorage("servicelist");
+        var serviceList = "/backend/serviceList.xml";
         
         if(serviceList) {
             getServiceList(serviceList, function( data ){
@@ -301,46 +301,6 @@
                 }
             }
 			_menu_.items.push(channel_obj);
-        }
-        if(channelList != null) {
-            var number = 1000;
-            for(var k = 0;k<channelList.length;k++) {
-                var dvbChannel = channelList.item(k);
-                var listed = false;
-                for(var l = 0;l<listedChannels.length;l++) {
-                    if(listedChannels[l].ccid == dvbChannel.ccid) {
-                        listed = true;
-                        break;
-                    }
-                }
-                if(!listed) {
-                    var chan = {};
-                    chan.items =  [
-                        {
-                            "title": "Now Showing",
-                            "description": "Now Showing",
-                            "name": "now",
-                            "app": 0
-                        }
-                    ];
-                    chan.title = dvbChannel.name;
-                    chan.titles = [ {"lang":"default","text":dvbChannel.name}]
-                    chan.unlisted = true;
-                    chan.serviceInstances = [];
-                    chan.serviceInstances.push({"dvbChannel" :dvbChannel});
-                    chan.dvbChannel = dvbChannel;
-                    chan.lcn = number++;
-                    var channel_obj = new Channel(chan, "menuitem"+ (k + services.services.length));
-                    for(var b = 0; b < channel_obj.boxes.length; b++){
-				        channel_obj.boxes[b].description = "";
-				        break;
-			        }
-                    if(currentChannel && dvbChannel.ccid == currentChannel.ccid ) {
-                         current_channel_obj = channel_obj;
-                    }
-			        _menu_.items.push(channel_obj);
-                }
-            }
         }
         _menu_.items.sort(compareLCN);
         if(current_channel_obj == null) {
