@@ -51,9 +51,9 @@ function capabilitiesModule() {
                 'Content-Type': 'application/xml'
             },
             data: xmlSerializer.serializeToString(capabilities),
-            success: () => console.info("Capabilities sent"),
-            error: (_, status, err) => console.warn(`Capabilities cannot be sent (status=${status}, err=${err})`)
-        })
+            success: function() { console.log("Capabilities sent") },
+            error: function() { console.log("Capabilities cannot be sent") }
+        });
 
         try {
             $(capabilities).find("broadcast").each(function(_i, b) {
