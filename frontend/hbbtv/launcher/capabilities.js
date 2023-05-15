@@ -24,6 +24,7 @@ function capabilitiesModule() {
         "urn:dvb:metadata:cs:VideoConformancePointsCS:2017:1.1.3",
         "urn:dvb:metadata:cs:VideoConformancePointsCS:2017:1.1.4"
     ];
+    var xmlSerializer = new XMLSerializer();
 
     var cloneConformancePoints = function() {
         var result = [];
