@@ -163,21 +163,27 @@
           languages.ui_language = "eng";
         }
         i18n.loadLanguage(languages.ui_language);
+        conformancePoints = capabilities.getConformancePoints("oipfcap");
+        if (conformancePoints.length === 0) {
+            // Disable if no conformancePoint has found
+            return;
+        }
+
         var serviceList = "/backend/serviceList.xml";
         
         if(serviceList) {
             getServiceList(serviceList, function( data ){
-                    selectServiceList(data);
+                    selectServiceList(data, conformancePoints);
             }, function(){
                 console.log("Error in fetching service data");
             });
         }
         else {
-            loadServicelistProviders(PROVIDER_LIST,false);
+            loadServicelistProviders(PROVIDER_LIST,false, conformancePoints);
         }
 	}
 
-    function loadServicelistProviders(url,cancelAllowed) {
+    function loadServicelistProviders(url, cancelAllowed, conformancePoints) {
 
         $.get( url, function( data ) {
             var servicelists = parseServiceListProviders(data);
@@ -205,14 +211,14 @@
                     $("#dialog").html("");
 			              $("#dialog").removeClass("show");
       			        $("#dialog").addClass("hide");
-                    selectServiceList(servicelist);
+                    selectServiceList(servicelist, conformancePoints);
                 }, function(){
                    console.log("Error in fetching service data");
                 });
             },cancelAllowed);
         },"text");
     }
-  function selectServiceList(servicelist) {
+  function selectServiceList(servicelist, conformancePoints) {
     var currentChannel = null;
     var channelList = null;
     try {
@@ -223,18 +229,18 @@
     } catch (e) {}
     var serviceList = parseServiceList(servicelist,channelList,supportedDrmSystems);
     if(serviceList.regions) {
-      selectRegion(serviceList,currentChannel,channelList);
+      selectRegion(serviceList,currentChannel,channelList, conformancePoints);
     }
     else {
-      createMenu(serviceList,currentChannel,channelList);
+      createMenu(serviceList,currentChannel,channelList, conformancePoints);
     }
   }
 
-  function selectRegion(serviceList,currentChannel,channelList) {
+  function selectRegion(serviceList,currentChannel,channelList, conformancePoints) {
      var region = getLocalStorage("region");
      if(region) {
       selectServiceListRegion(serviceList,region);
-      createMenu(serviceList,currentChannel,channelList);
+      createMenu(serviceList,currentChannel,channelList, conformancePoints);
       return;
      }
      var buttons = [];
@@ -248,18 +254,16 @@
       function(checked){
           setLocalStorage("region",serviceList.regions[checked].regionID);
           selectServiceListRegion(serviceList,serviceList.regions[checked].regionID);
-          createMenu(serviceList,currentChannel,channelList);
+          createMenu(serviceList,currentChannel,channelList, conformancePoints);
           $("#dialog").html("");
           $("#dialog").removeClass("show");
           $("#dialog").addClass("hide");
       },false,null,i18n.getString("select_region"));
   }
 
-	function createMenu(services,currentChannel,channelList){
+	function createMenu(services,currentChannel,channelList,conformancePoints){
         var current_channel_obj = null;
         var listedChannels = [];
-
-        conformancePoints = capabilities.getConformancePoints("oipfcap");
 
         $("#menu_0").empty();
         _menu_ = new Menu("menu_0");

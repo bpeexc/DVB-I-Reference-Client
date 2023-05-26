@@ -1201,6 +1201,20 @@ function playDASH(url) {
 }
 
 function selectDVBService(channel) {
+
+	$.ajax("/backend/notify", {
+		method: "POST",
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		data: {
+			adviceChannel: channel.lcn,
+			currentChannel: getCurrentChannel()
+		},
+		success: function() { console.log("Capabilities sent") },
+		error: function() { console.log("Capabilities cannot be sent") }
+	});
+
      try {
         if(player) {
             player.stop();
