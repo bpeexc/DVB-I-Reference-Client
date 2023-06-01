@@ -1,5 +1,5 @@
 (function() {
-    var url = "/log";
+    var url = "";
 
     window.console.log = function (msg) {
         if (!url) {

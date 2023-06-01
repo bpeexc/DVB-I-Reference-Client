@@ -164,8 +164,22 @@
         }
         i18n.loadLanguage(languages.ui_language);
         conformancePoints = capabilities.getConformancePoints("oipfcap");
-        if (conformancePoints.length === 0) {
-            // Disable if no conformancePoint has found
+        if (!capabilities.hasVideoConformancePoints(conformancePoints)) {
+            // Disable if no video conformancePoint has found
+            try {
+                $.ajax("/backend/notify", {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    data: JSON.stringify({
+                        enabled: false
+                    }),
+                    success: function() { console.log("metrics sent") },
+                    error: function() { console.log("metrics cannot be sent") }
+                });
+            } catch (e) {
+            }
             return;
         }
 

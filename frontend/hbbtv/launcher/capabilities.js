@@ -10,8 +10,21 @@ function capabilitiesModule() {
         "urn:dvb:broadcast:bitstream:audio:MPEG-H" : ["urn:dvb:metadata:cs:AudioConformancePointsCS:2017:1.2.7"],
     };
 
+    var conformancePointsHDRList = [
+        "urn:dvb:metadata:cs:VideoConformancePointsCS:2017:1.1.10",
+        "urn:dvb:metadata:cs:VideoConformancePointsCS:2017:1.1.11"
+    ];
+
     var xmlSerializer = new XMLSerializer();
 
+    var hasVideoConformancePoints = function(conformancePoints) {
+        for (var i in conformancePoints) {
+            if (conformancePointsHDRList.indexOf(conformancePoints[i]) >= 0) {
+                return true;
+            }
+        }
+        return false;
+    }
     var getConformancePoints = function(capabilitiesId) {
 
         var oipfCapabilities = $("#" + capabilitiesId);
@@ -52,12 +65,12 @@ function capabilitiesModule() {
         } catch (e) {
             console.log(e.message);
         }
-        console.log(JSON.stringify(conformancePoints));
         return conformancePoints;
     };
 
     return {
-        getConformancePoints: getConformancePoints
+        getConformancePoints: getConformancePoints,
+        hasVideoConformancePoints: hasVideoConformancePoints
     };
 }
 
