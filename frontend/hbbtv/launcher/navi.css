@@ -311,7 +311,7 @@ div, span {
 	-o-transition: all 0.10s linear;
 	transition: all 0.10s linear;
 
-	display:block;
+	display:none;
 	top: 370px;
 	height: 350px;
   width: 650px;
@@ -401,12 +401,14 @@ div, span {
 	color: #0090f1;
 }
 
+/*
 .open .menuitem_title, .menuitem_title.selected {
 	font-size: 42px;	
 	color: #0098f4 !important;
 	top: 30px;	
 	font-weight: 700;
 }
+ */
 
 .menuitem.unlisted.open .menuitem_chnumber,
 .menuitem.unlisted.open .menuitem_chname

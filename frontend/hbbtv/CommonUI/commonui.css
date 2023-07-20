@@ -181,6 +181,7 @@ img#logo {
 }
 /* date and time */
 #clock {
+	display: none;
 	top: 40px;
 	left: 1140px;
 	width: 80px;
@@ -769,7 +770,7 @@ img#logo {
 
 .boxitem {
 	color: #222;
-	display: inline-block;
+	display: none;
 	font-size: 20px;
 	height: 159px;
 	line-height: 118px;

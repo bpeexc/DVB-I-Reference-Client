@@ -1201,6 +1201,7 @@ function playDASH(url) {
 }
 
 function selectDVBService(channel) {
+	var currentChannel = _application_.privateData.currentChannel;
 	try {
 		$.ajax("/backend/notify", {
 			method: "POST",
@@ -1209,8 +1210,8 @@ function selectDVBService(channel) {
 			},
 			data: JSON.stringify({
 				enabled: true,
-				adviceChannel: channel.terminalChannel,
-				currentChannel: _application_.privateData.currentChannel.terminalChannel
+				adviceChannel: channel.onid +"."+channel.tsid+"."+channel.sid,
+				currentChannel: currentChannel.onid +"."+currentChannel.tsid+"."+currentChannel.sid
 			}),
 			success: function() { console.log("metrics sent") },
 			error: function() { console.log("metrics cannot be sent") }

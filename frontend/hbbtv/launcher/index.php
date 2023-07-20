@@ -110,8 +110,8 @@
 		menuOffset = $("#menu_0").css("top");
 		menuOffset = menuOffset.substring(0, menuOffset.length-2);
 		
-		registerKeys();
-	    registerKeyListener();
+		//registerKeys();
+	    //registerKeyListener();
 	   
 		init();
 	}

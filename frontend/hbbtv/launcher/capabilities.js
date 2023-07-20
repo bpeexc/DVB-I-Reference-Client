@@ -11,7 +11,6 @@ function capabilitiesModule() {
     };
 
     var conformancePointsHDRList = [
-        "urn:dvb:metadata:cs:VideoConformancePointsCS:2017:1.1.10",
         "urn:dvb:metadata:cs:VideoConformancePointsCS:2017:1.1.11"
     ];
 
